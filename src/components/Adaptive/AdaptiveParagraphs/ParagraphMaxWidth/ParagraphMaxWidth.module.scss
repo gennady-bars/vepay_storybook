@@ -1,0 +1,26 @@
+.ParagraphMaxWidth {
+
+    max-width: 850px;
+    margin: 2rem auto;
+    text-align: justify;
+    line-height: 1.5rem;
+
+
+
+
+
+
+
+}
+
+.gray {
+  color: #5F5F5F;
+
+  @media (max-width: 500px) {
+    color: black;
+  }
+}
+
+.white {
+  color: white;
+}

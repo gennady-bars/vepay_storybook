@@ -1,0 +1,13 @@
+.ParagraphWithTitle {
+
+    span {
+        display: block;
+        font-weight: bold;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+
+        @media (max-width: 900px) {
+            font-size: 1.17rem;
+        }
+    }
+}

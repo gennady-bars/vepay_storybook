@@ -1,0 +1,36 @@
+.AdaptiveParagraphs {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    p {
+        width: 40%;
+        padding: 2rem;
+        font-size: 21px;
+
+
+        @media (max-width: 900px) {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 1rem;
+            font-size: 1rem;
+        }
+        
+    }
+
+
+    @media (max-width: 1000px) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+
+
+
+}

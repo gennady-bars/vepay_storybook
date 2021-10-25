@@ -1,0 +1,1795 @@
+components:
+  schemas:
+    AddAcquirer:
+      properties:
+        active:
+          type: boolean
+        alias:
+          pattern: '[a-z0-9_]{2,50}'
+          type: string
+        name:
+          maxLength: 199
+          minLength: 1
+          type: string
+      required:
+      - alias
+      - name
+      type: object
+
+    AddPartner:
+          properties:
+            inn:
+              maxLength: 12
+              minLength: 10
+              type: string
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+          required:
+          - inn
+          - name
+          type: object
+
+    AddPartnerAcquirer:
+          properties:
+            acquirer_uuid:
+              format: uuid
+              type: string
+            active:
+              type: boolean
+            card_brands:
+              items:
+                enum:
+                - visa
+                - mc
+                - jcb
+                - amex
+                - discover
+                - mir
+                type: string
+              minItems: 1
+              type: array
+            partner_uuid:
+              format: uuid
+              type: string
+            priority:
+              maximum: 100
+              minimum: 1
+              type: integer
+          required:
+          - acquirer_uuid
+          - partner_uuid
+          type: object
+
+    AddStore:
+          properties:
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            partner_uuid:
+              format: uuid
+              type: string
+          required:
+          - name
+          - partner_uuid
+          type: object
+
+    AddTerminal:
+          properties:
+            acquirer_uuid:
+              format: uuid
+              type: string
+            active:
+              type: boolean
+            config_id:
+              maxLength: 200
+              type: string
+            currency_num:
+              maxLength: 3
+              minLength: 3
+              type: string
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            operations:
+              items:
+                enum:
+                - aft
+                - aft_recurring
+                - aft_recurring_reg
+                - ecom
+                - ecom_recurring
+                - ecom_recurring_reg
+                - oct_card
+                - oct_account
+                - reverse
+                - status
+                type: string
+              minItems: 1
+              type: array
+            store_uuid:
+              format: uuid
+              type: string
+          required:
+          - acquirer_uuid
+          - name
+          - operations
+          - store_uuid
+          - config_id
+          type: object
+
+    CardInfo:
+          properties:
+            bank:
+              maxLength: 255
+              minLength: 1
+              type: string
+            brand:
+              maxLength: 255
+              minLength: 1
+              type: string
+            exp_month:
+              maxLength: 2
+              minLength: 2
+              type: string
+            exp_year:
+              maxLength: 2
+              minLength: 2
+              type: string
+            holder:
+              maxLength: 255
+              minLength: 1
+              type: string
+            number:
+              maxLength: 19
+              minLength: 10
+              type: string
+            verification_code:
+              maxLength: 4
+              minLength: 3
+              type: string
+          required:
+          - exp_month
+          - exp_year
+          - holder
+          - number
+          - verification_code
+          type: object
+
+    DeleteAcquirers:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    DeletePartnerAcquirer:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    DeletePartners:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    DeleteStores:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    DeleteTerminals:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    GetAcquirers:
+          properties:
+            active:
+              type: boolean
+            alias:
+              pattern: '[a-z0-9_]{2,50}'
+              type: string
+            limit:
+              maximum: 100
+              minimum: 1
+              type: integer
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            offset:
+              minimum: 0
+              type: integer
+            sort_by:
+              items:
+                additionalProperties:
+                  type: string
+                type: object
+              minItems: 1
+              type: array
+            uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+          type: object
+
+    GetAcquirersByUUIDs:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    GetPartners:
+          properties:
+            inn:
+              maxLength: 12
+              minLength: 1
+              type: string
+            limit:
+              maximum: 100
+              minimum: 1
+              type: integer
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            offset:
+              minimum: 0
+              type: integer
+            sort_by:
+              items:
+                additionalProperties:
+                  type: string
+                type: object
+              minItems: 1
+              type: array
+            uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+          type: object
+
+    GetPartnersAcquirers:
+          properties:
+            acquirer_uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+            active:
+              type: boolean
+            card_brands:
+              items:
+                enum:
+                - visa
+                - mc
+                - jcb
+                - amex
+                - discover
+                - mir
+                type: string
+              minItems: 1
+              type: array
+            limit:
+              maximum: 100
+              minimum: 1
+              type: integer
+            offset:
+              minimum: 0
+              type: integer
+            partner_uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+            priority_from:
+              maximum: 100
+              minimum: 1
+              type: integer
+            priority_to:
+              maximum: 100
+              minimum: 1
+              type: integer
+            sort_by:
+              items:
+                additionalProperties:
+                  type: string
+                type: object
+              minItems: 1
+              type: array
+            uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+          type: object
+
+    GetPartnersAcquirersByUUIDs:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    GetPartnersByUUIDs:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    GetStores:
+          properties:
+            limit:
+              maximum: 100
+              minimum: 1
+              type: integer
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            offset:
+              minimum: 0
+              type: integer
+            partner_uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+            sort_by:
+              items:
+                additionalProperties:
+                  type: string
+                type: object
+              minItems: 1
+              type: array
+            uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+          type: object
+
+    GetStoresByUUIDs:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    GetTerminals:
+          properties:
+            acquirer_uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+            active:
+              type: boolean
+            currency_num:
+              maxLength: 3
+              minLength: 3
+              type: string
+            limit:
+              maximum: 100
+              minimum: 1
+              type: integer
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            config_id:
+              maxLength: 200
+              minLength: 1
+              type: string
+            offset:
+              minimum: 0
+              type: integer
+            operations:
+              items:
+                enum:
+                - aft
+                - aft_recurring
+                - aft_recurring_reg
+                - ecom
+                - ecom_recurring
+                - ecom_recurring_reg
+                - oct_card
+                - oct_account
+                - reverse
+                - status
+                type: string
+              minItems: 1
+              type: array
+            sort_by:
+              items:
+                additionalProperties:
+                  type: string
+                type: object
+              minItems: 1
+              type: array
+            store_uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+            uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+          type: object
+
+    GetTerminalsByUUIDs:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    GetTransactions:
+          properties:
+            created_from:
+              format: date-time
+              type: string
+            created_to:
+              format: date-time
+              type: string
+            completed_from:
+              format: date-time
+              type: string
+            completed_to:
+              format: date-time
+              type: string
+            ext_id:
+              maxLength: 50
+              minLength: 1
+              type: string
+            status:
+              enum:
+              - unknown
+              - created
+              - completed
+              - failed
+              - canceled
+              - reversed
+              type: string
+            int_id:
+              minimum: 1
+              type: integer
+            limit:
+              maximum: 100
+              minimum: 1
+              type: integer
+            offset:
+              minimum: 0
+              type: integer
+            sort_by:
+              items:
+                additionalProperties:
+                  type: string
+                type: object
+              minItems: 1
+              type: array
+            terminal_uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+            uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+          type: object
+
+    GetTransactionsByUUIDs:
+          properties:
+            uuids:
+              items:
+                format: uuid
+                type: string
+              minItems: 1
+              type: array
+          required:
+          - uuids
+          type: object
+
+    UpdateAcquirer:
+          properties:
+            active:
+              type: boolean
+            alias:
+              pattern: '[a-z0-9_]{2,50}'
+              type: string
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            uuid:
+              format: uuid
+              type: string
+          required:
+          - uuid
+          type: object
+
+    UpdatePartner:
+          properties:
+            inn:
+              maxLength: 12
+              minLength: 10
+              type: string
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            uuid:
+              format: uuid
+              type: string
+          required:
+          - uuid
+          type: object
+
+    UpdatePartnerAcquirer:
+          properties:
+            acquirer_uuid:
+              format: uuid
+              type: string
+            active:
+              type: boolean
+            card_brands:
+              items:
+                enum:
+                - visa
+                - mc
+                - jcb
+                - amex
+                - discover
+                - mir
+                type: string
+              minItems: 1
+              type: array
+            partner_uuid:
+              format: uuid
+              type: string
+            priority:
+              maximum: 100
+              minimum: 1
+              type: integer
+            uuid:
+              format: uuid
+              type: string
+          required:
+          - uuid
+          type: object
+
+    UpdateStore:
+          properties:
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            uuid:
+              format: uuid
+              type: string
+          required:
+          - uuid
+          type: object
+
+    UpdateTerminal:
+          properties:
+            active:
+              type: boolean
+            currency_num:
+              maxLength: 3
+              minLength: 3
+              type: string
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            config_id:
+              maxLength: 200
+              minLength: 1
+              type: string
+            operations:
+              items:
+                enum:
+                - aft
+                - aft_recurring
+                - aft_recurring_reg
+                - ecom
+                - ecom_recurring
+                - ecom_recurring_reg
+                - oct_card
+                - oct_account
+                - reverse
+                - status
+                type: string
+              minItems: 1
+              type: array
+            uuid:
+              format: uuid
+              type: string
+          required:
+          - uuid
+          type: object
+
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Наименование кода ошибки
+        errors:
+          type: array
+          description: Массив ошибок
+          items:
+            type: string
+
+    DeletedResult:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Результат выполнения функции(HTTP code)
+        result:
+          type: object
+          properties:
+            deleted:
+              type: array
+              items:
+                type: string
+                format: uuid
+
+
+    AcquirerResult:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        active:
+          type: boolean
+        alias:
+          pattern: '[a-z0-9_]{2,50}'
+          type: string
+        name:
+          maxLength: 199
+          minLength: 1
+          type: string
+
+    PartnerResult:
+          type: object
+          properties:
+            uuid:
+              type: string
+              format: uuid
+            inn:
+              maxLength: 12
+              minLength: 10
+              type: string
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+
+    PartnerAcquirerResult:
+          type: object
+          properties:
+            uuid:
+              type: string
+              format: uuid
+            acquirer_uuid:
+              format: uuid
+              type: string
+            active:
+              type: boolean
+            card_brands:
+              items:
+                enum:
+                - visa
+                - mc
+                - jcb
+                - amex
+                - discover
+                - mir
+                type: string
+              minItems: 1
+              type: array
+            partner_uuid:
+              format: uuid
+              type: string
+            priority:
+              maximum: 100
+              minimum: 1
+              type: integer
+
+    TerminalResult:
+          type: object
+          properties:
+            uuid:
+              type: string
+              format: uuid
+            acquirer_uuid:
+              format: uuid
+              type: string
+            active:
+              type: boolean
+            currency_num:
+              maxLength: 3
+              minLength: 3
+              type: string
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            config_id:
+              maxLength: 200
+              minLength: 1
+              type: string
+            operations:
+              items:
+                enum:
+                - aft
+                - aft_recurring
+                - aft_recurring_reg
+                - ecom
+                - ecom_recurring
+                - ecom_recurring_reg
+                - oct_card
+                - oct_account
+                - reverse
+                - status
+                type: string
+              minItems: 1
+              type: array
+            store_uuid:
+              format: uuid
+              type: string
+
+    StoreResult:
+          type: object
+          properties:
+            uuid:
+              type: string
+              format: uuid
+            name:
+              maxLength: 199
+              minLength: 1
+              type: string
+            partner_uuid:
+              format: uuid
+              type: string
+
+    TransactionResult:
+          type: object
+          properties:
+            created:
+              format: date-time
+              type: string
+            ext_id:
+              maxLength: 50
+              minLength: 1
+              type: string
+            status:
+              enum:
+              - unknown
+              - created
+              - failed
+              - canceled
+              - completed
+              - reversed
+              type: string
+            int_id:
+              minimum: 1
+              type: integer
+            terminal_uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+            uuid:
+              pattern: '[a-zA-Z0-9]{1,36}'
+              type: string
+
+    TerminalConfig:
+      properties:
+        merchant_id:
+          minimum: 1
+          type: integer
+          description: Логин/ID терминала (мерчанта) в системе банка
+
+        merchant_key_id:
+          minimum: 1
+          type: integer
+          description: Ключ/пароль в системе банка (id в системе хранения секретов)
+
+        merchant_ssl_cert_id:
+          minimum: 1
+          type: integer
+          description: Сертификат клиента (id в системе хранения секретов)
+
+        merchant_ssl_key_id:
+          minimum: 1
+          type: integer
+          description: Приватный ключ сертификата клиента (id в системе хранения секретов)
+
+        merchant_ssl_bundle_id:
+          minimum: 1
+          type: integer
+          description: Связка сертификатов для проверки сервера (id в системе хранения секретов)
+
+      required:
+      - merchant_id
+      - merchant_key_id
+      - merchant_ssl_bundle_id
+      - merchant_ssl_cert_id
+      - merchant_ssl_key_id
+      type: object
+
+
+info:
+  description: Документация методов API
+  title: Integrations
+  version: 1.0.0
+openapi: 3.0.2
+
+tags:
+  - name: Acquirer
+  - name: Partner
+  - name: Partner-Acquirer
+  - name: Store
+  - name: Terminal
+  - name: Transaction
+
+paths:
+  /api/admin/get_acquirers:
+    post:
+      tags:
+        - Acquirer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetAcquirers"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      acquirers:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/AcquirerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_acquirers_by_uuids:
+    post:
+      tags:
+        - Acquirer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetAcquirersByUUIDs"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      acquirers:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/AcquirerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/add_acquirer:
+    post:
+      tags:
+        - Acquirer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddAcquirer"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    $ref: "#/components/schemas/AcquirerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/update_acquirer:
+    post:
+      tags:
+        - Acquirer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAcquirer"
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    $ref: "#/components/schemas/AcquirerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/delete_acquirers:
+    post:
+      tags:
+        - Acquirer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteAcquirers"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeletedResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_partners:
+    post:
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetPartners"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      partners:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/PartnerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_partners_by_uuids:
+    post:
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetPartnersByUUIDs"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      partners:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/PartnerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/add_partner:
+    post:
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddPartner"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    $ref: "#/components/schemas/PartnerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/update_partner:
+    post:
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePartner"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    $ref: "#/components/schemas/PartnerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/delete_partners:
+    post:
+      tags:
+        - Partner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeletePartners"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeletedResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_partners_acquirers:
+    post:
+      tags:
+        - Partner-Acquirer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetPartnersAcquirers"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      partners-acquirers:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/PartnerAcquirerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_partners_acquirers_by_uuids:
+    post:
+      tags:
+        - Partner-Acquirer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetPartnersAcquirersByUUIDs"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      partners-acquirers:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/PartnerAcquirerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/add_partner_acquirer:
+    post:
+      tags:
+        - Partner-Acquirer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddPartnerAcquirer"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    $ref: "#/components/schemas/PartnerAcquirerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/update_partner_acquirer:
+    post:
+      tags:
+        - Partner-Acquirer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePartnerAcquirer"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    $ref: "#/components/schemas/PartnerAcquirerResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/delete_partners_acquirers:
+    post:
+      tags:
+        - Partner-Acquirer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeletePartnerAcquirer"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeletedResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_stores:
+    post:
+      tags:
+        - Store
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetStores"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      stores:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/StoreResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_stores_by_uuids:
+    post:
+      tags:
+        - Store
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetStoresByUUIDs"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      stores:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/StoreResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/add_store:
+    post:
+      tags:
+        - Store
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddStore"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    $ref: "#/components/schemas/StoreResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/update_store:
+    post:
+      tags:
+        - Store
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateStore"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    $ref: "#/components/schemas/StoreResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/delete_stores:
+    post:
+      tags:
+        - Store
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteStores"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeletedResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_terminals:
+    post:
+      tags:
+        - Terminal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetTerminals"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      terminals:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/TerminalResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_terminals_by_uuids:
+    post:
+      tags:
+        - Terminal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetTerminalsByUUIDs"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      terminals:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/TerminalResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/add_terminal:
+    post:
+      tags:
+        - Terminal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddTerminal"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    $ref: "#/components/schemas/TerminalResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/update_terminal:
+    post:
+      tags:
+        - Terminal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTerminal"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    $ref: "#/components/schemas/TerminalResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/delete_terminals:
+    post:
+      tags:
+        - Terminal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteTerminals"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeletedResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_transactions:
+    post:
+      tags:
+        - Transaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetTransactions"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      transactions:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/TransactionResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /api/admin/get_transactions_by_uuids:
+    post:
+      tags:
+        - Transaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetTransactionsByUUIDs"
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      transactions:
+                        type: array
+                        items:
+                          type: object
+                          $ref: "#/components/schemas/TransactionResult"
+        default:
+          description: Error (40X,500)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"

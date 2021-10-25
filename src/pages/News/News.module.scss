@@ -1,0 +1,14 @@
+.News {
+
+
+  .listItem {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: hsl(0, 0%, 90%);
+    }
+  }
+
+  
+}

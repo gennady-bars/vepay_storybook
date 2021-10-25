@@ -1,0 +1,45 @@
+.TableInput {
+
+  transition: all ease-in-out 0.1s;
+
+  .inputStyles {
+    min-height: 22px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #cccccc;
+    width: 100%;
+  }
+
+  
+
+  @media (max-width: 900px) {
+    display: flex;
+    flex-direction: column;
+    // border: 1px red solid;
+
+    .inputStyles {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .MyInput {
+      padding: 0;
+    }
+  }
+  
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  // border: 1px red solid;
+
+  .inputStyles {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .MyInput {
+    padding: 0;
+  }
+}

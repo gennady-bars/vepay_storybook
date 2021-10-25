@@ -1,0 +1,27 @@
+.StatusTD {
+
+
+  span {
+    display: block;
+    padding: 0.3rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    max-width: 100px;
+    text-align: center;
+  }
+
+  .active {
+    color: white;
+    background-color: rgb(23, 179, 23);
+
+  }
+
+  .notActive {
+    background-color: orange;
+    
+  }
+
+
+
+
+}

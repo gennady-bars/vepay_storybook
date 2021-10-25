@@ -1,0 +1,31 @@
+.Login {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+
+
+  .formWrapper {
+    border: 1px gray solid;
+    border-radius: 10px;
+    padding: 1rem;
+    min-width: 350px;
+  }
+
+
+
+
+
+
+
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}

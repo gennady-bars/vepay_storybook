@@ -1,0 +1,35 @@
+.PartnerAddition {
+
+
+  .MyTable {
+    // width: 100%;
+    // border: 1px solid red;
+
+    input {
+      // display: block;
+      width: 100%;
+      // border: 1px solid red;
+
+    }
+
+    .DivTableTDcls {
+      width: 70%;
+      max-width: 400px;
+      // border: 1px solid red;
+
+      @media (max-width: 900px) {
+        width: 100%;
+        max-width: unset
+      }
+
+    }
+
+  
+  }
+
+
+
+
+
+  
+}

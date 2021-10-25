@@ -1,0 +1,50 @@
+.Partners {
+
+  .tableBotton {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flexInputs {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .DivTableTHcls {
+    min-width: 132px;
+  }
+
+  .TableInput {
+    margin-right: 2rem;
+  }
+
+
+
+  .Pagination {
+    margin: 1rem;
+    margin-bottom: 0;
+  }
+
+  .active {
+    color: white;
+    background-color: blue;
+
+   
+  }
+
+  .pageClass {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin: 0 0.2rem;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: blue;
+      color: white;
+    }
+  }
+
+  
+}

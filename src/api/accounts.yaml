@@ -1,0 +1,1390 @@
+openapi: 3.0.1
+info:
+  title: Accounts
+  version: 1.0.0
+tags:
+  - name: General
+  - name: Accounts Helpers
+  - name: Roles Helpers
+  - name: Accounts-Roles Helpers
+servers:
+  - url: https://accounts.vepay/
+paths:
+  /api/login:
+    post:
+      tags:
+        - General
+      summary: Авторизация пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: Идентификатор пользователя
+                email:
+                  type: string
+                  description: Email пользователя
+                phone_number:
+                  type: string
+                  description: Телефонный номер пользователя
+                password:
+                  type: string
+                  description: Пароль
+              required: [password]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        description: Токен доступа
+                      refresh_token:
+                        type: string
+                        description: Токен продления доступа
+                      token_type:
+                        type: string
+                        description: Тип токена
+                      access_token_expires_in:
+                        type: integer
+                        description: Время действия токена доступа в секундах
+                      refresh_token_expires_in:
+                        type: integer
+                        description: Время действия токена продления доступа в секундах
+                      role_names:
+                        type: array
+                        description: Массив с ролями пользователя
+                        items:
+                          type: string
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/verification:
+    post:
+      tags:
+        - General
+      summary: Верификация пользователя при двухфакторной авторизации
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: Идентификатор пользователя
+                email:
+                  type: string
+                  description: Email пользователя
+                phone_number:
+                  type: string
+                  description: Телефонный номер пользователя
+                verification_key:
+                  type: string
+                  description: Ключ для двухфакторной аутентификации
+              required: [verification_key]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        description: Токен доступа
+                      refresh_token:
+                        type: string
+                        description: Токен продления доступа
+                      token_type:
+                        type: string
+                        description: Тип токена
+                      access_token_expires_in:
+                        type: integer
+                        description: Время действия токена доступа в секундах
+                      refresh_token_expires_in:
+                        type: integer
+                        description: Время действия токена продления доступа в секундах
+                      role_names:
+                        type: array
+                        description: Массив с ролями пользователя
+                        items:
+                          type: string
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/validate_token:
+    post:
+      tags:
+        - General
+      summary: Верификация пользователя при двухфакторной авторизации
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: Токен доступа
+              required: [access_token]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        description: Токен доступа
+                      refresh_token:
+                        type: string
+                        description: Токен продления доступа
+                      token_type:
+                        type: string
+                        description: Тип токена
+                      access_token_expires_in:
+                        type: integer
+                        description: Время действия токена доступа в секундах
+                      refresh_token_expires_in:
+                        type: integer
+                        description: Время действия токена продления доступа в секундах
+                      role_names:
+                        type: array
+                        description: Массив с ролями пользователя
+                        items:
+                          type: string
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/refresh_token:
+    post:
+      tags:
+        - General
+      summary: Верификация пользователя при двухфакторной авторизации
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+                  description: Токен продления доступа
+              required: [refresh_token]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        description: Токен доступа
+                      refresh_token:
+                        type: string
+                        description: Токен продления доступа
+                      token_type:
+                        type: string
+                        description: Тип токена
+                      access_token_expires_in:
+                        type: integer
+                        description: Время действия токена доступа в секундах
+                      refresh_token_expires_in:
+                        type: integer
+                        description: Время действия токена продления доступа в секундах
+                      role_names:
+                        type: array
+                        description: Массив с ролями пользователя
+                        items:
+                          type: string
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/generate_restore_key:
+    post:
+      tags:
+        - General
+      summary: Генерация ключа для восстановление доступа к учетной записи
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: Идентификатор пользователя
+                email:
+                  type: string
+                  description: Email пользователя
+                phone_number:
+                  type: string
+                  description: Телефонный номер пользователя
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      restore_key_valid_until:
+                        type: string
+                        description: Время, до которого действует ключ для восстановления пароля
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/restore_account:
+    post:
+      tags:
+        - General
+      summary: Восстановление доступа к учетной записи
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: Идентификатор пользователя
+                email:
+                  type: string
+                  description: Email пользователя
+                phone_number:
+                  type: string
+                  description: Телефонный номер пользователя
+                restore_key:
+                  type: string
+                  description: Ключ для восстановления пароля
+                new_password:
+                  type: string
+                  description: Новый пароль пользователя
+              required: [restore_key, new_password]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      login:
+                        type: string
+                        description: Идентификатор пользователя
+                      email:
+                        type: string
+                        description: Email пользователя
+                      phone_number:
+                        type: string
+                        description: Телефонный номер пользователя
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/generate_email_verification_key:
+    post:
+      tags:
+        - General
+      summary: Генерация ключа верификации email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: Идентификатор пользователя
+              required: [login]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      email_verification_valid_until:
+                        type: string
+                        description: Время, до которого действует ключ верификации email
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/verification_email:
+    post:
+      tags:
+        - General
+      summary: Верификация email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: Идентификатор пользователя
+                email_verification_key:
+                  type: string
+                  description: Ключ для верефикации email
+              required: [login, email_verification_key]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/get_accounts:
+    post:
+      tags:
+        - Accounts Helpers
+      summary: Получение массива учетных записей согласно входным фильтрам
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: Идентификатор пользователя
+                access_token:
+                  type: string
+                  description: токен доступа
+                email:
+                  type: string
+                  description: Почтовый ящик пользователя
+                uuid:
+                  type: string
+                  description: Уникальный идентификатор пользователя
+                phone_number:
+                  type: string
+                  description: Телефонный номер пользователя
+                parent_ids:
+                  type: array
+                  description: Массив идентификаторов учетных записей-родителей
+                  items:
+                    type: integer
+                created_from:
+                  type: string
+                  description: Время создания учетной записи (нижняя граница)
+                created_to:
+                  type: string
+                  description: Время создания учетной записи (верхняя граница)
+                deleted:
+                  type: boolean
+                  description: Флаг, обозначающий что аккаунт был удален
+                blocked:
+                  type: boolean
+                  description: Флаг, обозначающий что аккаунт был заблокирован
+                suspended_until_from:
+                  type: string
+                  description: Время, до которого приостановлен доступ с данной учетной записью (нижняя граница)
+                suspended_until_to:
+                  type: string
+                  description: Время, до которого приостановлен доступ с данной учетной записью (верхняя граница)
+                verification_required:
+                  type: boolean
+                  description: Флаг, обозначающий включенность двухфакторной авторизации
+                limit:
+                  type: integer
+                  description: Количество возвращаемых записей
+                offset:
+                  type: integer
+                  description: Начальная позиция выборки
+                sort_by:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                      order:
+                        type: string
+              required: [access_token]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  accounts:
+                    type: array
+                    description: Идентификаторы транзакции
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                        id:
+                          type: integer
+                        login:
+                          type: string
+                        email:
+                          type: string
+                        phone_number:
+                          type: string
+                        parent_id:
+                          type: integer
+                        created:
+                          type: string
+                        deleted:
+                          type: boolean
+                        blocked:
+                          type: boolean
+                        suspended_until:
+                          type: string
+                        verification_required:
+                          type: boolean
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/get_accounts_by_ids:
+    post:
+      tags:
+        - Accounts Helpers
+      summary: Получение массива учетных записей согласно входным фильтрам
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  description: Идентификаторы пользователя
+                  items:
+                    type: integer
+                access_token:
+                  type: string
+                  description: токен доступа
+              required: [access_token, ids]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  accounts:
+                    type: array
+                    description: Идентификаторы транзакции
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                        id:
+                          type: integer
+                        login:
+                          type: string
+                        email:
+                          type: string
+                        phone_number:
+                          type: string
+                        parent_id:
+                          type: integer
+                        created:
+                          type: string
+                        deleted:
+                          type: boolean
+                        blocked:
+                          type: boolean
+                        suspended_until:
+                          type: string
+                        verification_required:
+                          type: boolean
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/add_account:
+    post:
+      tags:
+        - Accounts Helpers
+      summary: Создание учетной записи
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: Идентификатор пользователя
+                access_token:
+                  type: string
+                  description: токен доступа
+                email:
+                  type: string
+                  description: Почтовый ящик пользователя
+                uuid:
+                  type: string
+                  description: Уникальный идентификатор пользователя
+                phone_number:
+                  type: string
+                  description: Телефонный номер пользователя
+                parent_id:
+                  type: integer
+                  description: Идентификатор учетных записей-родителей
+                  items:
+                    type: integer
+                created_from:
+                  type: string
+                  description: Время создания учетной записи (нижняя граница)
+                created_to:
+                  type: string
+                  description: Время создания учетной записи (верхняя граница)
+                deleted:
+                  type: boolean
+                  description: Флаг, обозначающий что аккаунт был удален
+                blocked:
+                  type: boolean
+                  description: Флаг, обозначающий что аккаунт был заблокирован
+                suspended_until_from:
+                  type: string
+                  description: Время, до которого приостановлен доступ с данной учетной записью (нижняя граница)
+                suspended_until_to:
+                  type: string
+                  description: Время, до которого приостановлен доступ с данной учетной записью (верхняя граница)
+                verification_required:
+                  type: boolean
+                  description: Флаг, обозначающий включенность двухфакторной авторизации
+              required: [access_token]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  accounts:
+                    type: array
+                    description: Идентификаторы транзакции
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                        id:
+                          type: integer
+                        login:
+                          type: string
+                        email:
+                          type: string
+                        phone_number:
+                          type: string
+                        parent_id:
+                          type: integer
+                        created:
+                          type: string
+                        deleted:
+                          type: boolean
+                        blocked:
+                          type: boolean
+                        suspended_until:
+                          type: string
+                        verification_required:
+                          type: boolean
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/update_account:
+    post:
+      tags:
+        - Accounts Helpers
+      summary: Обновление учетной записи
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: Токен авторизованного пользователя
+                id:
+                  type: string
+                  description: Идентификатор пользователя
+                uuid:
+                  type: string
+                  description: Уникальный идентификатор пользователя
+                login:
+                  type: string
+                  description: Идентификатор пользователя
+                email:
+                  type: string
+                  description: Почтовый ящик пользователя
+                phone_number:
+                  type: string
+                  description: Телефонный номер пользователя
+                parent_id:
+                  type: integer
+                  description: Идентификатор учетных записей-родителей
+                  items:
+                    type: integer
+                deleted:
+                  type: boolean
+                  description: Флаг, обозначающий что аккаунт был удален
+                blocked:
+                  type: boolean
+                  description: Флаг, обозначающий что аккаунт был заблокирован
+                verification_required:
+                  type: boolean
+                  description: Флаг, обозначающий включенность двухфакторной авторизации
+                suspended_until:
+                  type: string
+                  description: Время, до которого приостановлен доступ с данной учетной записью
+                password:
+                  type: string
+                  description: Пароль пользователя
+              required: [access_token, id]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  accounts:
+                    type: array
+                    description: Идентификаторы транзакции
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                        id:
+                          type: integer
+                        login:
+                          type: string
+                        email:
+                          type: string
+                        phone_number:
+                          type: string
+                        parent_id:
+                          type: integer
+                        created:
+                          type: string
+                        deleted:
+                          type: boolean
+                        blocked:
+                          type: boolean
+                        suspended_until:
+                          type: string
+                        verification_required:
+                          type: boolean
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/delete_accounts:
+    post:
+      tags:
+        - Accounts Helpers
+      summary: Удаление учетных записей
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: Токен авторизованного пользователя
+                ids:
+                  type: array
+                  items:
+                    type: integer
+              required: [access_token, ids]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  deleted:
+                    type: array
+                    description: Идентификаторы транзакции
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                        id:
+                          type: integer
+                        login:
+                          type: string
+                        email:
+                          type: string
+                        phone_number:
+                          type: string
+                        parent_id:
+                          type: integer
+                        created:
+                          type: string
+                        deleted:
+                          type: boolean
+                        blocked:
+                          type: boolean
+                        suspended_until:
+                          type: string
+                        verification_required:
+                          type: boolean
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/get_roles:
+    post:
+      tags:
+        - Roles Helpers
+      summary: Получение массива ролей согласно входным фильтрам
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: токен доступа
+                name:
+                  type: string
+                  description: Почтовый ящик пользователя
+                limit:
+                  type: integer
+                  description: Количество возвращаемых записей
+                offset:
+                  type: integer
+                  description: Начальная позиция выборки
+                sort_by:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                      order:
+                        type: string
+              required: [access_token]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  roles:
+                    type: array
+                    description: Идентификаторы транзакции
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/get_roles_by_ids:
+    post:
+      tags:
+        - Roles Helpers
+      summary: Получение массива учетных записей согласно входным фильтрам
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  description: Идентификаторы пользователя
+                  items:
+                    type: integer
+                access_token:
+                  type: string
+                  description: токен доступа
+              required: [access_token, ids]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  roles:
+                    type: array
+                    description: Идентификаторы транзакции
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/add_role:
+    post:
+      tags:
+        - Roles Helpers
+      summary: Создание роли
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: токен доступа
+                name:
+                  type: string
+                  description: Почтовый ящик пользователя
+              required: [access_token, name]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/update_role:
+    post:
+      tags:
+        - Roles Helpers
+      summary: Обновление роли
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: Токен авторизованного пользователя
+                id:
+                  type: string
+                  description: Идентификатор пользователя
+                name:
+                  type: string
+                  description: Имя роли
+              required: [access_token, id, name]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/delete_roles:
+    post:
+      tags:
+        - Roles Helpers
+      summary: Удаление ролей
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: Токен авторизованного пользователя
+                ids:
+                  type: array
+                  items:
+                    type: integer
+              required: [access_token, ids]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  deleted:
+                    type: array
+                    description: Идентификаторы транзакции
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/get_accounts_roles:
+    post:
+      tags:
+        - Accounts-Roles Helpers
+      summary: Получение массива связок учетная запись - роль согласно входным фильтрам
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: токен доступа
+                account_id:
+                  type: integer
+                  description: Идентификатор учетной записи
+                role_id:
+                  type: integer
+                  description: Идентификатор роли
+                limit:
+                  type: integer
+                  description: Количество возвращаемых записей
+                offset:
+                  type: integer
+                  description: Начальная позиция выборки
+                sort_by:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                      order:
+                        type: string
+              required: [access_token]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  accounts_roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        account_id:
+                          type: integer
+                        role_id:
+                          type: integer
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/get_accounts_roles_by_ids:
+    post:
+      tags:
+        - Accounts-Roles Helpers
+      summary: Получение массива связок учетная запись - роль по идентификаторам
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  description: Идентификаторы пользователя
+                  items:
+                    type: integer
+                access_token:
+                  type: string
+                  description: токен доступа
+              required: [access_token, ids]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        account_id:
+                          type: integer
+                        role_id:
+                          type: integer
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/add_account_role:
+    post:
+      tags:
+        - Accounts-Roles Helpers
+      summary: Создание связки аккаунт - роль
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: токен доступа
+                account_id:
+                  type: integer
+                role_id:
+                  type: integer
+              required: [access_token, account_id, role_id]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      account_id:
+                          type: integer
+                      role_id:
+                        type: integer
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/update_account_role:
+    post:
+      tags:
+        - Accounts-Roles Helpers
+      summary: Обновление связки аккаунт - роль
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: Токен авторизованного пользователя
+                id:
+                  type: integer
+                account_id:
+                    type: integer
+                role_id:
+                  type: integer
+              required: [access_token, account_id, role_id, id]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      account_id:
+                        type: integer
+                      role_id:
+                        type: integer
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/delete_accounts_roles:
+    post:
+      tags:
+        - Accounts-Roles Helpers
+      summary: Удаление связок аккаунт - роль
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  description: Токен авторизованного пользователя
+                ids:
+                  type: array
+                  items:
+                    type: integer
+              required: [access_token, ids]
+        required: true
+      responses:
+        "200":
+          description: status=200
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Статус (HTTP статус)
+                  deleted:
+                    type: array
+                    description: Идентификаторы транзакции
+                    items:
+                      type: integer
+        default:
+          description: Error. status!=200
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          description: Сообщения об ошибках
+          items:
+            type: string
+        status:
+          type: string
+          description: Код ошибки (HTTP статус)

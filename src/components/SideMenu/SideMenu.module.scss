@@ -1,0 +1,66 @@
+.SideMenu {
+
+  position: relative;
+  width: 300px;
+  padding: 1rem;
+  background-color: hsl(210, 17%, 96%);
+  white-space: pre-line;
+  transition: all ease-in-out 0.2s;
+  // border: 1px solid pink;
+
+
+  // @media (max-width: 900px) {
+  //   transform: translateX(-100%);
+  //   position: absolute;
+  //   z-index: 9999;
+  //   min-height: 100vh;
+  // }
+
+ 
+
+  .sideMenuBtn {
+    position: absolute;
+    right: -45px;
+    cursor: pointer;
+
+    :hover {
+      stroke: #337AB7;
+      animation: strok 1s reverse; 
+    }
+  }
+
+  svg {
+    stroke: #000;
+    height: 40px;
+    stroke-miterlimit: 10;
+    stroke-dasharray: 400;    
+    stroke-width: 2;
+    stroke-linecap: round; 
+    stroke-linejoin: round;
+    fill: none;
+    transition: stroke 0.3s;
+}
+
+@keyframes strok {
+  100% {
+      stroke-dashoffset: 400;
+  }
+}
+
+
+
+
+  
+}
+
+.hiddenMenu {
+  transform: translateX(-100%);
+  position: absolute;
+  z-index: 9999;
+  min-height: 100vh;
+
+  svg {
+    stroke: #337AB7;
+    animation: strok 10s reverse infinite; 
+  }
+}

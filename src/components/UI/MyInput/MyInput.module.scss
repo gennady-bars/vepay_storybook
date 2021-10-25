@@ -1,0 +1,22 @@
+.MyInput {
+
+  padding: 1rem;
+  position: relative;
+
+
+  .input {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .error {
+    position: absolute;
+    color: red;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    // margin-top: -5px;
+    font-size: 12px;
+  }
+
+
+}
